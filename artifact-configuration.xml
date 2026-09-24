@@ -10,8 +10,8 @@
     <pe-file
       path="Big Text Viewer.exe"
       product-name="Big Text Viewer"
-      product-version="${version}"
-      file-version="${version}"
+      product-version="4.0.0"
+      file-version="4.0.0"
       company-name="ChunChun"
       copyright="ChunChun"
       original-filename="Big Text Viewer.exe">
