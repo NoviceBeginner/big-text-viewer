@@ -1,1 +1,55 @@
+name: Build Windows Release
 
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2025
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.98.1"
+          targets: x86_64-pc-windows-msvc
+
+      - name: Build release
+        shell: pwsh
+        run: |
+          cargo build `
+            --release `
+            --locked `
+            --target x86_64-pc-windows-msvc
+
+      - name: Prepare artifact
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release
+
+          Copy-Item `
+            "target\x86_64-pc-windows-msvc\release\big-text-viewer.exe" `
+            "release\Big Text Viewer.exe"
+
+          Copy-Item "README.md" "release\README.md"
+          Copy-Item "LICENSE" "release\LICENSE"
+          Copy-Item `
+            "assets\LICENSE-NOTO.txt" `
+            "release\LICENSE-NOTO.txt"
+
+      - name: Upload unsigned build
+        uses: actions/upload-artifact@v7
+        with:
+          name: Big-Text-Viewer-Windows-x64-unsigned
+          path: release
+          if-no-files-found: error
+          retention-days: 14
