@@ -1,3 +1,12 @@
+## Code signing policy
+
+Official Windows releases are built by GitHub Actions and signed using
+SignPath.io. The signing certificate is provided by SignPath Foundation.
+
+See [Code signing policy](docs/code-signing-policy.md).
+
+See [Privacy policy](docs/privacy-policy.md).
+
 # Big Text Viewer V4
 
 **產品名稱：** Big Text Viewer  
